@@ -40,10 +40,6 @@ int signnumber(int* nums, int numsSize)
         count = 0;
         for(j=0;j<numsSize;j++)
         {
-            if(nums[i]==-1 || nums[j]==-1)
-            {
-                continue;
-            }
             if(i!=j)
             {
                 if(nums[i]==nums[j])
@@ -61,14 +57,15 @@ int signnumber(int* nums, int numsSize)
             return nums[i];
         }
     }
+    return 0;
 }
 
 int better_signnumber(int* num, int numSize)
 {
-    int n = nums[0], i = 0;
-    for(i=1;i<numsSize;i++)
+    int n = num[0], i = 0;
+    for(i=1;i<numSize;i++)
     {
-        n^=nums[i];
+        n^=num[i];
     }
 
     return n;
