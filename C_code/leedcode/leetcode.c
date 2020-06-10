@@ -5,11 +5,7 @@
 #include<stdbool.h>
 #include<string.h>
 
-/** 49. Group Anagrams
- * Return an array of arrays of size *returnSize.
- * The sizes of the arrays are returned as *returnColumnSizes array.
- * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
- */
+
 char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes);
 
 void main()
@@ -28,15 +24,6 @@ void main()
 
 char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes)
 {
-    /*
-    //strs == ["abc","tea","tan","ate","nat","bat"]
-    printf("*strs = %s\n",*strs);  //abc
-    printf("**strs = %c\n",**strs); //a
-    printf("*(*strs+1) = %c\n",*(*strs+1)); //b
-    printf("*(*strs+2) = %c\n",*(*strs+2)); //c
-    printf("*(strs+1) = %s\n",*(strs+1));  //tea
-    printf("strlen(*strs) = %d \n", (int)strlen(*strs)); //3
-    */
     int stringsum[strsSize];
     int i = 0, j = 0,len = 0;
     int temp[strsSize];
@@ -50,7 +37,56 @@ char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** return
         }
         printf("stringsum[%d] = %d \n",i,stringsum[i]); 
     }
-    
-    return;
+
+}
+
+
+char *** think_step(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes)
+{
+    // strs == ["eat","tea","tan","ate","nat","bat"]
+    /*output
+    [
+        ["ate","eat","tea"],
+        ["nat","tan"],
+        ["bat"]
+    ]
+    // strs == ["eat","tea","tan","ate","nat","bat"]
+    printf("*strs = %s\n",*strs);  //abc
+    printf("**strs = %c\n",**strs); //a
+    printf("*(*strs+1) = %c\n",*(*strs+1)); //b
+    printf("*(*strs+2) = %c\n",*(*strs+2)); //c
+    printf("*(strs+1) = %s\n",*(strs+1));  //tea
+    printf("strlen(*strs) = %d \n", (int)strlen(*strs)); //3
+    */
+    char *** returnResult = malloc(sizeof(char**)*3);
+    returnResult[0] = malloc(sizeof(char*)*3);
+    returnResult[1] = malloc(sizeof(char*)*2);
+    returnResult[2] = malloc(sizeof(char*)*1);
+
+    returnResult[0][0] = malloc(sizeof(char*)*strlen("ate")+1);
+    strcpy(returnResult[0][0], "ate");
+
+    returnResult[0][1] = malloc(sizeof(char*)*strlen("eat")+1);
+    strcpy(returnResult[0][1], "eat");
+
+    returnResult[0][2] = malloc(sizeof(char*)*strlen("tea")+1);
+    strcpy(returnResult[0][2], "tea");
+
+    returnResult[1][0] = malloc(sizeof(char*)*strlen("nat")+1);
+    strcpy(returnResult[1][0], "nat");
+
+    returnResult[1][1] = malloc(sizeof(char*)*strlen("tan")+1);
+    strcpy(returnResult[1][1], "tan");
+
+    returnResult[2][0] = malloc(sizeof(char*)*strlen("bat")+1);
+    strcpy(returnResult[2][0], "bat");
+
+    *returnSize = 3;
+    *returnColumnSizes = malloc(sizeof(int)*3);
+    (*returnColumnSizes)[0] = 3;
+    (*returnColumnSizes)[1] = 2;
+    (*returnColumnSizes)[2] = 1;
+
+    return returnResult;
 
 }
