@@ -7,6 +7,9 @@
 
 
 char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes);
+int compare(const void *a, const void *b);
+
+
 
 void main()
 {
@@ -14,12 +17,24 @@ void main()
     s = "eat";
     //char ** strs = {"eat","tea","tan","ate","nat","bat"};    
     char * strs[] = {"eat","tea","tan","ate","nat","bat"};
-    int* returnSize;
+    int* returnSize = malloc(sizeof(int));
     int* returnColumnSizes[] = {};
 
     groupAnagrams(strs, 6, returnSize, returnColumnSizes);
 
+    free(returnSize);
     return; 
+}
+
+int compare(const void *a, const void *b)//這函式是 qsort 所需的比較函式
+{
+      int c = *(int *)a;
+      int d = *(int *)b;
+      // if(c < d) {return -1;}               //傳回 -1 代表 a < b
+      //else if (c == d) {return 0;}      //傳回   0 代表 a = b
+      //else return 1;                          //傳回  1 代表 a>b
+      if(c > d)
+        return 1; 
 }
 
 char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes)
@@ -27,16 +42,50 @@ char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** return
     int stringsum[strsSize];
     int i = 0, j = 0,len = 0;
     int temp[strsSize];
+    //Sum each char number of string.
     for(i=0;i<strsSize;i++)
     {
         stringsum[i] = 0;
-        temp[i] = 0;
         for(j=0;j<(int)strlen(*(strs+i));j++)
         {
             stringsum[i] +=(int) *(*(strs+i)+j);
         }
         printf("stringsum[%d] = %d \n",i,stringsum[i]); 
+        temp[i] = stringsum[i];
     }
+
+    //Get returnSize
+    for(i=0;i<strsSize;i++)
+    {
+        for(j=0;j<strsSize;j++)
+        {
+            if(0 == temp[i])
+                break;
+            if(i != j)
+            {
+                if(temp[i] == temp[j])
+                {
+                    temp[j] = 0;
+                }
+            }
+        }
+        printf("temp[%d] = %d \n",i,temp[i]); 
+
+        if(0 != temp[i])
+        {
+            *returnSize = *returnSize + 1;
+        }
+    }
+    printf("returnSize= %d \n",*returnSize); 
+    //Great returnColumnSizes array
+    qsort((void *)temp,strsSize, sizeof(temp[0]),compare); //都是從小到大排序
+
+    *returnColumnSizes = malloc(sizeof(int)*(*returnSize));
+    char *** returnResult = malloc(sizeof(char**)*(*returnSize));
+
+
+
+    
 
 }
 
