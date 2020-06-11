@@ -17,12 +17,11 @@ void main()
     s = "eat";
     //char ** strs = {"eat","tea","tan","ate","nat","bat"};    
     char * strs[] = {"eat","tea","tan","ate","nat","bat"};
-    int* returnSize = malloc(sizeof(int));
     int* returnColumnSizes[] = {};
+    int *returnSize;
 
     groupAnagrams(strs, 6, returnSize, returnColumnSizes);
 
-    free(returnSize);
     return; 
 }
 
@@ -40,8 +39,9 @@ int compare(const void *a, const void *b)//這函式是 qsort 所需的比較函
 char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes)
 {
     int stringsum[strsSize];
-    int i = 0, j = 0,len = 0;
+    int i = 0, j = 0,r = 0,c = 0;
     int temp[strsSize];
+    returnSize = (int *) malloc(sizeof(int));
     //Sum each char number of string.
     for(i=0;i<strsSize;i++)
     {
@@ -50,7 +50,7 @@ char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** return
         {
             stringsum[i] +=(int) *(*(strs+i)+j);
         }
-        printf("stringsum[%d] = %d \n",i,stringsum[i]); 
+        //printf("stringsum[%d] = %d \n",i,stringsum[i]); 
         temp[i] = stringsum[i];
     }
 
@@ -69,24 +69,48 @@ char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** return
                 }
             }
         }
-        printf("temp[%d] = %d \n",i,temp[i]); 
 
         if(0 != temp[i])
         {
             *returnSize = *returnSize + 1;
         }
     }
-    printf("returnSize= %d \n",*returnSize); 
+    //printf("returnSize= %d \n",*returnSize); 
     //Great returnColumnSizes array
     qsort((void *)temp,strsSize, sizeof(temp[0]),compare); //都是從小到大排序
+    *returnColumnSizes = malloc(sizeof(int)*(*returnSize));//*returnColumnSizes = malloc(sizeof(int)*3);
+    char *** returnResult = NULL;//  malloc(sizeof(char**)*(*returnSize))
 
-    *returnColumnSizes = malloc(sizeof(int)*(*returnSize));
-    char *** returnResult = malloc(sizeof(char**)*(*returnSize));
-
-
-
+    r = 0;
     
-
+    for(i=0;i<strsSize;i++)
+    {
+        if(0 == temp[i])
+            continue;
+        c = 0;
+        returnResult = realloc(returnResult,sizeof(char**)*(r+1));
+        for(j=0;j<strsSize;j++)
+        {
+            if(temp[i] == stringsum[j])
+            {
+                returnResult[r] = realloc(sizeof(char*)*(c+1));
+                returnResult[r][c] = *(strs+j);
+                //printf("woodyi%d j%d\n",i ,j);
+                printf("returnResult[%d][%d]=%s\n",r,c,*(strs+j));
+                printf("returnResult[%d][%d]=%s\n",r,c,returnResult[r][c]);
+                c++;
+            }
+            
+        }
+        *(*(returnColumnSizes)+r) = c;
+        r++;
+    }
+    printf("*(returnColumnSizes+0)=%d\n",*(*(returnColumnSizes)+0));
+    printf("*(returnColumnSizes+1)=%d\n",*(*(returnColumnSizes)+1));
+    printf("*(returnColumnSizes+2)=%d\n",*(*(returnColumnSizes)+2));
+    printf("returnResult[1][0]=%s\n",returnResult[r][c]);
+    free(returnSize);
+    return returnResult;
 }
 
 
@@ -139,3 +163,4 @@ char *** think_step(char ** strs, int strsSize, int* returnSize, int** returnCol
     return returnResult;
 
 }
+
