@@ -1,3 +1,4 @@
+ 
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -6,9 +7,7 @@
 #include<string.h>
 /*
 Given an array of strings, group anagrams together.
-
 Example:
-
 Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
 Output:
 [
@@ -17,7 +16,6 @@ Output:
   ["bat"]
 ]
 Note:
-
 All inputs will be in lowercase.
 The order of your output does not matter.
 */
@@ -38,7 +36,7 @@ void main()
     int *returnSize;
     char *** A;
 
-    A = groupAnagrams(strs, 6, returnSize, returnColumnSizes);
+    A = groupAnagrams_2(strs, 6, returnSize, returnColumnSizes);
 
     return; 
 }
@@ -200,13 +198,13 @@ int cmp(const void *a,const void *b)
 char *** groupAnagrams_1(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes){
     int i;
     char ** strsCpy = (char **)malloc(sizeof(char *)*strsSize);
-//1、先将每个单词按字母顺序排序存放在一个新的空间strsCpy里；
+//1、先將每個單詞按字母順序排序存放在一個新的空間strsCpy裡；
     for(i=0; i<strsSize; i++){
         strsCpy[i] = (char *)malloc(sizeof(char)*100);
         strcpy(strsCpy[i],strs[i]);
         qsort(strsCpy[i],strlen(strsCpy[i]),sizeof(strsCpy[i][0]),cmp);
     }
-//2、mask数组用来标记是否是字母异位词，初始值赋为-1；
+//2、mask指定為字母異位詞，初始值賦為-1；
     int mask[strsSize];
     memset(mask,-1,sizeof(mask));
     
@@ -216,11 +214,10 @@ char *** groupAnagrams_1(char ** strs, int strsSize, int* returnSize, int** retu
     *returnSize = 0;
 
     int k,j;
-//3、legnth数组记录ret中每一行单词的个数，同returnColumnSizes[0]，初始值0；
+//3、legnth記錄記錄ret中每一行單詞的個數，同returnColumnSizes [0]，初始值0；
     int length[strsSize];
     memset(length,0,sizeof(length));
 
-//遍历一次strs
     for(i=0; i<strsSize; i++){
         k=0;
         while(mask[k] >= 0){
