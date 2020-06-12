@@ -1,4 +1,3 @@
- 
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -36,7 +35,7 @@ void main()
     int *returnSize;
     char *** A;
 
-    A = groupAnagrams_2(strs, 6, returnSize, returnColumnSizes);
+    A = groupAnagrams(strs, 6, returnSize, returnColumnSizes);
 
     return; 
 }
@@ -63,11 +62,11 @@ char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** return
     for(i=0;i<strsSize;i++)
     {
         stringsum[i] = 0;
-        for(j=0;j<(int)strlen(*(strs+i));j++)
+        for(j=0;j<(int)strlen(strs[i]);j++)
         {
             stringsum[i] +=(int) *(*(strs+i)+j);
         }
-        printf("stringsum[%d] = %d \n",i,stringsum[i]); 
+        //printf("stringsum[%d] = %d \n",i,stringsum[i]); 
         temp[i] = stringsum[i];
     }
 
@@ -94,34 +93,29 @@ char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** return
     }
     //Great returnColumnSizes array
     qsort((void *)temp,strsSize, sizeof(temp[0]),compare); //都是從小到大排序
-    *returnColumnSizes = malloc(sizeof(int)*(*returnSize));//*returnColumnSizes = malloc(sizeof(int)*3);
-    char *** returnResult = NULL;//  malloc(sizeof(char**)*(*returnSize))
-
+    returnColumnSizes[0] = (int *)malloc(sizeof(int )*strsSize); //*returnColumnSizes = malloc(sizeof(int)*(strsSize));
+    char *** returnResult = malloc(sizeof(char**)*(*returnSize));
     r = 0;
-    
     for(i=0;i<strsSize;i++)
     {
         if(0 == temp[i])
             continue;
         c = 0;
-        returnResult = realloc(returnResult,sizeof(char**)*(*returnSize));
+        
         for(j=0;j<strsSize;j++)
         {
             if(temp[i] == stringsum[j])
             {
-                returnResult[r] = realloc(returnResult[r],sizeof(char*)*(c+1));
-                returnResult[r][c] = (char *)malloc(sizeof(char)*(strlen(*(strs+j))+1));
-                strcpy(returnResult[r][c],*(strs+j));
-                //returnResult[r][c] = *(strs+j);
-                //printf("woodyi%d j%d\n",i ,j);
-                //printf("returnResult[%d][%d]=%s\n",r,c,*(strs+j));
+                returnResult[r] = (char **)realloc(returnResult[r],sizeof(char*)*(c+1));
+                returnResult[r][c] = (char *)malloc(sizeof(char)*(strlen((strs[j]))+1));
+                strcpy(returnResult[r][c],strs[j]);
+                //printf("returnResult[%d][%d]=%s\n",r,c,*returnResult[r][c]);
                 printf("returnResult[%d][%d]=%s\n",r,c,returnResult[r][c]);
-                
                 c++;
             }
             
         }
-        *(*(returnColumnSizes)+r) = c;
+        returnColumnSizes[0][r] = c;//*(*(returnColumnSizes)+r) = c;
         r++;
     }
     /*
