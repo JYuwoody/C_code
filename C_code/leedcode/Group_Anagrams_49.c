@@ -20,7 +20,7 @@ The order of your output does not matter.
 */
 
 char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes); //woody gcc ok leetcode no
-char *** groupAnagrams_1(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes); //other gcc no leetcode ko
+char *** groupAnagrams_notme(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes); //other gcc no leetcode ko
 int compare(const void *a, const void *b);
 
 
@@ -189,7 +189,7 @@ int cmp(const void *a,const void *b)
 }
 
 
-char *** groupAnagrams_1(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes){
+char *** groupAnagrams_notme(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes){
     int i;
     char ** strsCpy = (char **)malloc(sizeof(char *)*strsSize);
 //1、先將每個單詞按字母順序排序存放在一個新的空間strsCpy裡；
