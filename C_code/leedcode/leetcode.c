@@ -5,162 +5,82 @@
 #include<stdbool.h>
 #include<string.h>
 
-
-char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes);
-int compare(const void *a, const void *b);
-
-
+int lastStoneWeight(int* stones, int stonesSize);
 
 void main()
 {
-    char *s;
-    s = "eat";
-    //char ** strs = {"eat","tea","tan","ate","nat","bat"};    
-    char * strs[] = {"eat","tea","tan","ate","nat","bat"};
-    int* returnColumnSizes[] = {};
-    int *returnSize;
+    int stones[6] = {9,8,1,4,2,5};
+    int stonesSize = 6;
 
-    groupAnagrams(strs, 6, returnSize, returnColumnSizes);
+    lastStoneWeight( stones, stonesSize);
 
     return; 
 }
 
-int compare(const void *a, const void *b)//這函式是 qsort 所需的比較函式
+int lastStoneWeight(int* stones, int stonesSize)
 {
-      int c = *(int *)a;
-      int d = *(int *)b;
-      // if(c < d) {return -1;}               //傳回 -1 代表 a < b
-      //else if (c == d) {return 0;}      //傳回   0 代表 a = b
-      //else return 1;                          //傳回  1 代表 a>b
-      if(c > d)
-        return 1; 
-}
+    int i = 0, j = 0;
+    int max_first = 0, max_second = 0;  //index
+    int a[30] ={0};
 
-char *** groupAnagrams(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes)
-{
-    int stringsum[strsSize];
-    int i = 0, j = 0,r = 0,c = 0;
-    int temp[strsSize];
-    returnSize = (int *) malloc(sizeof(int));
-    //Sum each char number of string.
-    for(i=0;i<strsSize;i++)
+    if(stonesSize==1)
+        return stones[0];
+
+    if(stonesSize == 2)
     {
-        stringsum[i] = 0;
-        for(j=0;j<(int)strlen(*(strs+i));j++)
-        {
-            stringsum[i] +=(int) *(*(strs+i)+j);
-        }
-        //printf("stringsum[%d] = %d \n",i,stringsum[i]); 
-        temp[i] = stringsum[i];
+        if(stones[0] > stones[1])
+            return stones[0]-stones[1];
+        else
+            return stones[1]-stones[0];
+    }    
+
+    for(i=0;i<stonesSize;i++)
+    {
+        a[i] = stones[i]; 
     }
+    a[stonesSize] = 0;
+    max_first = stonesSize;
+    max_second = stonesSize;
 
-    //Get returnSize
-    for(i=0;i<strsSize;i++)
+    for(i=0; i<stonesSize;i++)
     {
-        for(j=0;j<strsSize;j++)
+        //find first max and second max
+        for(j=0;j<stonesSize;j++)
         {
-            if(0 == temp[i])
-                break;
-            if(i != j)
+            if(a[j]==0)
+                continue;
+            if (a[j]>=a[max_second])
             {
-                if(temp[i] == temp[j])
+                if (a[j]>=a[max_first])
                 {
-                    temp[j] = 0;
+                    max_second = max_first;
+                    max_first = j;
+                }
+                else
+                {
+                    max_second = j;
                 }
             }
         }
 
-        if(0 != temp[i])
+        //caculate
+        printf("a[max_first]=%d a[max_second]=%d\n", a[max_first], a[max_second]);
+        a[max_first] = a[max_first] - a[max_second];
+        //printf("stones[max_first]=%d\n",stones[max_first]);
+        if(a[max_second] == 0)
         {
-            *returnSize = *returnSize + 1;
+            return a[max_first];
         }
-    }
-    //printf("returnSize= %d \n",*returnSize); 
-    //Great returnColumnSizes array
-    qsort((void *)temp,strsSize, sizeof(temp[0]),compare); //都是從小到大排序
-    *returnColumnSizes = malloc(sizeof(int)*(*returnSize));//*returnColumnSizes = malloc(sizeof(int)*3);
-    char *** returnResult = NULL;//  malloc(sizeof(char**)*(*returnSize))
+        a[max_second] = 0;
+        max_first = max_second;
 
-    r = 0;
-    
-    for(i=0;i<strsSize;i++)
-    {
-        if(0 == temp[i])
-            continue;
-        c = 0;
-        returnResult = realloc(returnResult,sizeof(char**)*(r+1));
-        for(j=0;j<strsSize;j++)
+
+        int k=0;
+        for(k=0;k<stonesSize;k++)
         {
-            if(temp[i] == stringsum[j])
-            {
-                returnResult[r] = realloc(sizeof(char*)*(c+1));
-                returnResult[r][c] = *(strs+j);
-                //printf("woodyi%d j%d\n",i ,j);
-                printf("returnResult[%d][%d]=%s\n",r,c,*(strs+j));
-                printf("returnResult[%d][%d]=%s\n",r,c,returnResult[r][c]);
-                c++;
-            }
-            
+            printf("%d ",a[k]);
         }
-        *(*(returnColumnSizes)+r) = c;
-        r++;
+        printf("\n");
     }
-    printf("*(returnColumnSizes+0)=%d\n",*(*(returnColumnSizes)+0));
-    printf("*(returnColumnSizes+1)=%d\n",*(*(returnColumnSizes)+1));
-    printf("*(returnColumnSizes+2)=%d\n",*(*(returnColumnSizes)+2));
-    printf("returnResult[1][0]=%s\n",returnResult[r][c]);
-    free(returnSize);
-    return returnResult;
+    return 0;
 }
-
-
-char *** think_step(char ** strs, int strsSize, int* returnSize, int** returnColumnSizes)
-{
-    // strs == ["eat","tea","tan","ate","nat","bat"]
-    /*output
-    [
-        ["ate","eat","tea"],
-        ["nat","tan"],
-        ["bat"]
-    ]
-    // strs == ["eat","tea","tan","ate","nat","bat"]
-    printf("*strs = %s\n",*strs);  //abc
-    printf("**strs = %c\n",**strs); //a
-    printf("*(*strs+1) = %c\n",*(*strs+1)); //b
-    printf("*(*strs+2) = %c\n",*(*strs+2)); //c
-    printf("*(strs+1) = %s\n",*(strs+1));  //tea
-    printf("strlen(*strs) = %d \n", (int)strlen(*strs)); //3
-    */
-    char *** returnResult = malloc(sizeof(char**)*3);
-    returnResult[0] = malloc(sizeof(char*)*3);
-    returnResult[1] = malloc(sizeof(char*)*2);
-    returnResult[2] = malloc(sizeof(char*)*1);
-
-    returnResult[0][0] = malloc(sizeof(char*)*strlen("ate")+1);
-    strcpy(returnResult[0][0], "ate");
-
-    returnResult[0][1] = malloc(sizeof(char*)*strlen("eat")+1);
-    strcpy(returnResult[0][1], "eat");
-
-    returnResult[0][2] = malloc(sizeof(char*)*strlen("tea")+1);
-    strcpy(returnResult[0][2], "tea");
-
-    returnResult[1][0] = malloc(sizeof(char*)*strlen("nat")+1);
-    strcpy(returnResult[1][0], "nat");
-
-    returnResult[1][1] = malloc(sizeof(char*)*strlen("tan")+1);
-    strcpy(returnResult[1][1], "tan");
-
-    returnResult[2][0] = malloc(sizeof(char*)*strlen("bat")+1);
-    strcpy(returnResult[2][0], "bat");
-
-    *returnSize = 3;
-    *returnColumnSizes = malloc(sizeof(int)*3);
-    (*returnColumnSizes)[0] = 3;
-    (*returnColumnSizes)[1] = 2;
-    (*returnColumnSizes)[2] = 1;
-
-    return returnResult;
-
-}
-
