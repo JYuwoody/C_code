@@ -5,82 +5,52 @@
 #include<stdbool.h>
 #include<string.h>
 
-int lastStoneWeight(int* stones, int stonesSize);
+int* productExceptSelf(int* nums, int numsSize, int* returnSize);
 
 void main()
 {
-    int stones[6] = {9,8,1,4,2,5};
-    int stonesSize = 6;
-
-    lastStoneWeight( stones, stonesSize);
-
     return; 
 }
 
-int lastStoneWeight(int* stones, int stonesSize)
+//=======================================================================
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* productExceptSelf(int* nums, int numsSize, int* returnSize)
 {
-    int i = 0, j = 0;
-    int max_first = 0, max_second = 0;  //index
-    int a[30] ={0};
+    int i = 0, total = 1;
+    int count0 = 0;
+    int count0_index = -1;
+    *returnSize = numsSize;
 
-    if(stonesSize==1)
-        return stones[0];
+    int* output = malloc(sizeof(int)*numsSize);
 
-    if(stonesSize == 2)
+    for(i=0;i<numsSize;i++)
     {
-        if(stones[0] > stones[1])
-            return stones[0]-stones[1];
+        if(nums[i] != 0)
+            total = total * nums[i];
         else
-            return stones[1]-stones[0];
-    }    
-
-    for(i=0;i<stonesSize;i++)
-    {
-        a[i] = stones[i]; 
+        {
+            count0++;
+            count0_index = i;
+        }
+        output[i] = 0; 
     }
-    a[stonesSize] = 0;
-    max_first = stonesSize;
-    max_second = stonesSize;
+    if(count0 >1)
+        return output;
 
-    for(i=0; i<stonesSize;i++)
+    if(count0 == 1)
     {
-        //find first max and second max
-        for(j=0;j<stonesSize;j++)
-        {
-            if(a[j]==0)
-                continue;
-            if (a[j]>=a[max_second])
-            {
-                if (a[j]>=a[max_first])
-                {
-                    max_second = max_first;
-                    max_first = j;
-                }
-                else
-                {
-                    max_second = j;
-                }
-            }
-        }
-
-        //caculate
-        printf("a[max_first]=%d a[max_second]=%d\n", a[max_first], a[max_second]);
-        a[max_first] = a[max_first] - a[max_second];
-        //printf("stones[max_first]=%d\n",stones[max_first]);
-        if(a[max_second] == 0)
-        {
-            return a[max_first];
-        }
-        a[max_second] = 0;
-        max_first = max_second;
-
-
-        int k=0;
-        for(k=0;k<stonesSize;k++)
-        {
-            printf("%d ",a[k]);
-        }
-        printf("\n");
+        output[count0_index] = total;
+        return output;
     }
-    return 0;
+
+    for(i=0;i<numsSize;i++)
+    {
+        output[i] = total / nums[i];
+    }
+
+
+    return output;
 }
+//=======================================================================
