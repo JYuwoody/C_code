@@ -36,9 +36,11 @@ int* productExceptSelf(int* nums, int numsSize, int* returnSize)
         }
         output[i] = 0; 
     }
+    //陣列中有兩個0，除了自己互乘都會遇到乘0
     if(count0 >1)
         return output;
 
+    //陣列中只有1個0，記錄下第幾個index是0，他會有值，其他為0
     if(count0 == 1)
     {
         output[count0_index] = total;
@@ -53,4 +55,9 @@ int* productExceptSelf(int* nums, int numsSize, int* returnSize)
 
     return output;
 }
+//=======================================================================
+int* productExceptSelf_better(int* nums, int numsSize, int* returnSize)
+{
+}
+
 //=======================================================================
