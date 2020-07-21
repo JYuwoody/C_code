@@ -58,6 +58,24 @@ int* productExceptSelf(int* nums, int numsSize, int* returnSize)
 //=======================================================================
 int* productExceptSelf_better(int* nums, int numsSize, int* returnSize)
 {
+    int* res = (int *)malloc(sizeof(int)*numsSize);
+    int* left = (int *)malloc(sizeof(int)*numsSize);//store the product of left of element i
+    int* right = (int *)malloc(sizeof(int)*numsSize);//store the product of right of element i;
+    int i;
+
+    left[0] = 1;
+    for(i = 1;i<numsSize;i++)
+        left[i] = nums[i-1]*left[i-1];
+
+    right[numsSize-1] = 1;
+    for(i = numsSize-2;i>=0;i--)
+        right[i] = nums[i+1]*right[i+1];
+
+    for(i = 0;i<numsSize;i++)
+        res[i] = left[i]*right[i];
+
+    *returnSize = numsSize;    
+    return res;
 }
 
 //=======================================================================
