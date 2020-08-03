@@ -5,77 +5,61 @@
 #include<stdbool.h>
 #include<string.h>
 
-int* productExceptSelf(int* nums, int numsSize, int* returnSize);
+
+
+int numIslands(char** grid, int gridSize, int* gridColSize);
 
 void main()
 {
+    
     return; 
 }
 
-//=======================================================================
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-int* productExceptSelf(int* nums, int numsSize, int* returnSize)
+int display(char**grid,int NUMBER_OF_ROWS,int NUMBER_OF_COLS)
 {
-    int i = 0, total = 1;
-    int count0 = 0;
-    int count0_index = -1;
-    *returnSize = numsSize;
-
-    int* output = malloc(sizeof(int)*numsSize);
-
-    for(i=0;i<numsSize;i++)
+    int i, j, flag = 1;
+    for(i=0;i<NUMBER_OF_ROWS;i++)
     {
-        if(nums[i] != 0)
-            total = total * nums[i];
-        else
+        for(j=0;j<NUMBER_OF_COLS;j++)
         {
-            count0++;
-            count0_index = i;
+            printf("%c ",grid[i][j]);
+            if(grid[i][j] == '1')
+                flag = 0;
         }
-        output[i] = 0; 
+        printf("\n");
     }
-    //陣列中有兩個0，除了自己互乘都會遇到乘0
-    if(count0 >1)
-        return output;
-
-    //陣列中只有1個0，記錄下第幾個index是0，他會有值，其他為0
-    if(count0 == 1)
-    {
-        output[count0_index] = total;
-        return output;
-    }
-
-    for(i=0;i<numsSize;i++)
-    {
-        output[i] = total / nums[i];
-    }
-
-
-    return output;
+    return flag; 
 }
-//=======================================================================
-int* productExceptSelf_better(int* nums, int numsSize, int* returnSize)
+
+
+int numIslands(char** grid, int gridSize, int* gridColSize)
 {
-    int* res = (int *)malloc(sizeof(int)*numsSize);
-    int* left = (int *)malloc(sizeof(int)*numsSize);//store the product of left of element i
-    int* right = (int *)malloc(sizeof(int)*numsSize);//store the product of right of element i;
-    int i;
+    //11110
+    //01010
+    //10001
+    //11110
+    int NUMBER_OF_ROWS = gridSize;  //4
+    int NUMBER_OF_COLS = gridColSize[0];  //5
+    int landcount = 0, i, j,si,sj;
+    int allclear = 0, sideclear = 0;
 
-    left[0] = 1;
-    for(i = 1;i<numsSize;i++)
-        left[i] = nums[i-1]*left[i-1];
+    //print map
+    display(grid,NUMBER_OF_ROWS,NUMBER_OF_COLS);
 
-    right[numsSize-1] = 1;
-    for(i = numsSize-2;i>=0;i--)
-        right[i] = nums[i+1]*right[i+1];
 
-    for(i = 0;i<numsSize;i++)
-        res[i] = left[i]*right[i];
+    for(i=0;i<NUMBER_OF_ROWS;i++)
+    {
+        for(j=0;j<NUMBER_OF_COLS;j++)
+        {
+            if(grid[i][j] == '1')
+            {
+                grid[i][j] = 'X';
+            }
+        }
+    }
 
-    *returnSize = numsSize;    
-    return res;
+
+
+
+
 }
-
-//=======================================================================
