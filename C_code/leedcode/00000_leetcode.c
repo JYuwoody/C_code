@@ -9,7 +9,7 @@
 
 int numIslands(char** grid, int gridSize, int* gridColSize);
 void dfs(char** grid, int x, int y, int NUMBER_OF_ROWS, int NUMBER_OF_COLS);
-int display(char** grid,int NUMBER_OF_ROWS,int NUMBER_OF_COLS);
+void display(char** grid,int NUMBER_OF_ROWS,int NUMBER_OF_COLS);
 
 
 void main()
@@ -17,20 +17,18 @@ void main()
     return; 
 }
 
-int display(char**grid,int NUMBER_OF_ROWS,int NUMBER_OF_COLS)
+void display(char**grid,int NUMBER_OF_ROWS,int NUMBER_OF_COLS)
 {
-    int i, j, flag = 1;
+    int i, j;
     for(i=0;i<NUMBER_OF_ROWS;i++)
     {
         for(j=0;j<NUMBER_OF_COLS;j++)
         {
             printf("%c ",grid[i][j]);
-            if(grid[i][j] == '1')
-                flag = 0;
         }
         printf("\n");
     }
-    return flag; 
+    return; 
 }
 
 int numIslands(char** grid, int gridSize, int* gridColSize)
@@ -57,6 +55,7 @@ void dfs(char** grid, int x, int y, int NUMBER_OF_ROWS, int NUMBER_OF_COLS)
 {
     if (x < 0 || y < 0 || x >= NUMBER_OF_COLS || y >= NUMBER_OF_ROWS || grid[y][x] == '0')
         return;
+
     grid[y][x] = '0';
     dfs(grid, x + 1, y, NUMBER_OF_ROWS, NUMBER_OF_COLS);
     dfs(grid, x - 1, y, NUMBER_OF_ROWS, NUMBER_OF_COLS);
@@ -73,6 +72,8 @@ int numIslands1(char** grid, int gridSize, int* gridColSize)
     int NUMBER_OF_ROWS = gridSize;  //4
     int NUMBER_OF_COLS = gridColSize[0];  //5
     int ans = 0, x, y;
+
+    if(NUMBER_OF_ROWS == 0 || NUMBER_OF_COLS == 0) return 0;
 
     //print map
     display(grid,NUMBER_OF_ROWS,NUMBER_OF_COLS);
