@@ -4,55 +4,47 @@
 #include<math.h>
 #include<stdbool.h>
 #include<string.h>
+//1008. Construct Binary Search Tree from Preorder Traversal
+
+//Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
 
 
-int minPathSum(int** grid, int gridSize, int* gridColSize);
+struct TreeNode* bstFromPreorder(int* preorder, int preorderSize);
 
 void main()
 {
+
+
     return; 
 }
-void display(char**grid,int NUMBER_OF_ROWS,int NUMBER_OF_COLS)
-{
-    int i, j;
-    for(i=0;i<NUMBER_OF_ROWS;i++)
-    {
-        for(j=0;j<NUMBER_OF_COLS;j++)
-        {
-            printf("%c ",grid[i][j]);
-        }
-        printf("\n");
-    }
-    return; 
-}
-/*00064
-Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
-*/
-int minPathSum(int** grid, int gridSize, int* gridColSize)
+
+
+struct TreeNode* bstFromPreorderRange(int* preorder, int start, int end)
 {
 
 }
 
-/*
-class Solution {
-public:
-    int minPathSum(vector<vector<int>>& grid) {
-        int m = grid.size();
-        if (m == 0) return 0;
-        int n = grid[0].size();
-        
-        for (int i = 0; i < m; ++i)
-            for (int j = 0; j < n; ++j) {
-                if (i == 0 && j == 0) continue;
-                if (i == 0) 
-                    grid[i][j] += grid[i][j - 1];
-                else if (j == 0)
-                    grid[i][j] += grid[i - 1][j];
-                else
-                    grid[i][j] += min(grid[i][j - 1], grid[i - 1][j]);
-            }
-        
-        return grid[m - 1][n - 1];
-    }    
-};
-*/
+struct TreeNode* bstFromPreorder(int* preorder, int preorderSize)
+{
+    // preorder [8,5,1,7,10,12] preorderSize = 6
+
+    // root 
+    struct TreeNode* root = malloc(sizeof(struct TreeNode));
+
+    root->val = preorder[0];
+    //preorder[i] = 10;
+    //range [start,end)
+    //letf: preorder[1] ~ preorder[i]
+    //right:preorder[i] ~ preorder[preorderSize
+
+    root->letf = bstFromPreorderRange();
+    root->right = bstFromPreorderRange();
+
+
+
+}
