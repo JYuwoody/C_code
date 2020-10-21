@@ -116,8 +116,6 @@ struct TreeNode* bstFromPreorder_forloop(int* preorder, int preorderSize)
             }
             
         }
-        
-        //free(node);
     }
     return root;
 }
