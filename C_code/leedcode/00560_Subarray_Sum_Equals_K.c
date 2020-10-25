@@ -146,5 +146,28 @@ int subarraySum_better(int* nums, int numsSize, int k)
 
     return totalcount;
 }
+/*
+    //sum[0] = 0
+    //sun[i] = nums[0] + nums[1] + ... + nums[i-1]
+    if(sum[j+1] == k + sum[i]) // sum[i] = sum[j+1] - k // targer =  sum[j+1] - k
+    {
+        counter++
+    }
 
+sum(i,j+1) = sum(0,j+1)-sum(0,i)
+
+if(sum(i,j+1) == k) //
+{
+    counter++
+}
+sum[j+1]-sum[i]
+if(sum[j+1]-sum[i]== k) //
+{
+    counter++
+}
+if(sum[i] == sum[j+1] - k) //
+{
+    counter++
+}
+*/
 //=======================================================================================
