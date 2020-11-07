@@ -162,15 +162,130 @@ void main()
 }
 
 
+//*****************************************************************
+struct kvlist {
+    int key;
+    int val;
+    struct kvlist *prev;
+    struct kvlist *next;
+    struct kvlist *shadow;
+};
 
+typedef struct {
+    int kf;
+    int sz;
+    int idx;
+    struct kvlist **kp;
+    struct kvlist *buff;
+    struct kvlist *head;
+    struct kvlist *tail;
+} LRUCache;
 
+LRUCache* lRUCacheCreate(int capacity) {
+    LRUCache *obj;
+    int i;
+    
+    obj = calloc(1, sizeof(LRUCache));
+    //assert(obj);
+    
+    obj->kf = 1024 * 10;
+    obj->kp = calloc(obj->kf, sizeof(struct kvlist *));
+    obj->sz = capacity;
+    obj->buff = calloc(obj->sz, sizeof(struct kvlist));
+    obj->idx = 0;
+    
+    obj->head = &obj->buff[0];
+    obj->tail = &obj->buff[obj->sz - 1];
+    obj->head->prev = obj->tail;
+    obj->tail->next = obj->head;
+    if (obj->sz > 1) {
+        obj->head->next = &obj->buff[1];
+        obj->tail->prev = &obj->buff[obj->sz - 2];
+    }
+    for (i = 1; i < obj->sz - 1; i ++) {
+        obj->buff[i].prev = &obj->buff[i - 1];
+        obj->buff[i].next = &obj->buff[i + 1];
+    }
+    
+    return obj;
+}
 
+struct kvlist *lookup(LRUCache *obj, int key) {
+    struct kvlist *l;
+    
+    l = obj->kp[key % obj->kf];
+    while (l && l->key != key) {
+        l = l->shadow;
+    }
+    
+    return l;
+}
 
+void move2tail(LRUCache *obj, struct kvlist *l) {
+    if (l == obj->tail) return;
+    if (l == obj->head) {
+        obj->head = l->next;
+        obj->tail = l;
+        return;
+    }
+    // take it out of the loop
+    l->prev->next = l->next;
+    l->next->prev = l->prev;
+    // link to the tail
+    l->next = obj->head;
+    l->prev = obj->tail;
+    obj->head->prev = l;
+    obj->tail->next = l;
+    
+    obj->tail = l;
+}
 
+int lRUCacheGet(LRUCache* obj, int key) {
+    int val;
+    struct kvlist *l;
+    
+    l = lookup(obj, key);
+    
+    if (!l) return -1;
+    
+    val = l->val;
+    
+    move2tail(obj, l);
+    
+    return val;
+}
 
+void lRUCachePut(LRUCache* obj, int key, int value) {
+    int i;
+    struct kvlist *l, **pp;
+    
+    l = lookup(obj, key);
+    if (!l) {
+        l = obj->head;
+        
+        // remove it from hash table
+        i = l->key % obj->kf;
+        pp = &obj->kp[i];
+        while (*pp && *pp != l) {
+            pp = &(*pp)->shadow;
+        }
+        *pp = l->shadow;
+        
+        // insert it to hash table with new key
+        l->key = key;
+        i = key % obj->kf;
+        l->shadow = obj->kp[i];
+        obj->kp[i] = l;
+    }
+    
+    l->val = value;
+    
+    move2tail(obj, l);
+}
 
-
-
-
-
+void lRUCacheFree(LRUCache* obj) {
+    free(obj->kp);
+    free(obj->buff);
+}
+//*****************************************************************
 
