@@ -106,3 +106,36 @@ bool isCousins(struct TreeNode* root, int x, int y)
 
     return xDepth == yDepth && xParent != yParent;
 }
+
+//==================================================================
+typedef struct{
+    int depth;
+    int parent;
+}Info;
+
+Info getParent1(struct TreeNode* root, int target, int parent)
+{
+    if(root == NULL) 
+        return (Info) {-1, 0};
+
+    if(  root->val == target ) 
+        return (Info) {0, parent};
+
+    Info left = getParent1(root->left, target, root->val);
+    Info right = getParent1(root->right, target, root->val);
+
+    if(left.parent != 0)
+        return (Info) {left.depth+1, left.parent};
+    if(right.parent != 0)
+        return (Info) {right.depth+1, right.parent};
+
+    return (Info) {-1, 0};
+}
+
+bool isCousins_beter(struct TreeNode* root, int x, int y)
+{
+    Info xInfo = getParent1(root, x, 0);
+    Info yInfo = getParent1(root, y, 0);
+    return xInfo.depth == yInfo.depth && xInfo.parent != yInfo.parent;
+}
+//==================================================================
