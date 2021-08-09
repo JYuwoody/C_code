@@ -80,8 +80,8 @@ int** floodFill(int** image, int imageSize, int* imageColSize, int sr, int sc, i
     // image = {[1,1,1,0],
     //          [1,1,0,1],
     //          [1,0,1,0]}
-    // imageSize = 3
-    // imageColSize : [4, 4, 4]
+    // imageSize = 3 == *returnSize
+    // imageColSize : [4, 4, 4] == (** returnColumnSizes)
     // sr: 1 sc: 2 newnewColor = 2 >> old_image[1][2]=1 to new_image[1][2] = 2 than (1,2) is center near this center and same center old value change to new_image value.
 
     int nRows = imageSize;
