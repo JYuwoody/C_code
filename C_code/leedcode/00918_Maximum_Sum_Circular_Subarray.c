@@ -101,7 +101,7 @@ int maxSubArray(int* nums, int numsSize)
 
 int maxSubarraySumCircular(int* nums, int numsSize)
 {
-    int chooseMiddle = maxSubArray(nums, numsSize);
+    int chooseMiddle = maxSubArray(nums, numsSize); //Find line max
     int total = 0, i = 0, result = 0;
     int notChooseMiddle = 0;
 
@@ -109,16 +109,18 @@ int maxSubarraySumCircular(int* nums, int numsSize)
     {
         total += nums[i];
     }
+    // reverse array 
     for(i=0;i<numsSize;i++)
     {
          nums[i] *= -1;
     }
 
+    // after reverse fine sub min to find sub max 
     result = maxSubArray(nums, numsSize);
 
     if(result != -total)
     {
-        notChooseMiddle =  total + result;
+        notChooseMiddle =  total + result; //total - (reverse sub max)
         if(chooseMiddle > notChooseMiddle)
             return chooseMiddle;
         return notChooseMiddle;
