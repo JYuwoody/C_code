@@ -27,6 +27,10 @@ int main()
 
 int maxSubArray(int* nums, int numsSize)
 {
+    /*
+        Runtime: 408 ms, faster than 5.04% of C online submissions for Maximum Subarray.
+        Memory Usage: 6.2 MB, less than 97.00% of C online submissions for Maximum Subarray.
+    */
     int start = 0;
     int end = 0;
     int tempsum = 0,sum = nums[0];
@@ -53,6 +57,10 @@ int maxSubArray(int* nums, int numsSize)
 
 int better_maxSubArray(int* nums, int numsSize)
 {
+    /*
+        Runtime: 8 ms, faster than 39.33% of C online submissions for Maximum Subarray.
+        Memory Usage: 6.5 MB, less than 31.77% of C online submissions for Maximum Subarray.
+    */
     int max = nums[0];
     int local = nums[0];
     for (int i = 1; i < numsSize; i++) {
@@ -60,4 +68,32 @@ int better_maxSubArray(int* nums, int numsSize)
         max = (max < local)? local: max;
     }
     return max;
+}
+
+int maxSubArray(int* nums, int numsSize){
+    /*
+        Runtime: 4 ms, faster than 97.00% of C online submissions for Maximum Subarray.
+        Memory Usage: 6.3 MB, less than 68.37% of C online submissions for Maximum Subarray.
+    */
+    int maxSubArry = nums[0];
+    int maxPrevArray = 0;
+    int i, choose, choose2;
+
+    for(i=1;i<numsSize;i++)
+    {
+        choose = maxPrevArray + nums[i-1];
+        if(choose < 0)
+            maxPrevArray = 0;
+        else
+            maxPrevArray = choose;
+
+        choose2 = maxPrevArray + nums[i];
+        if(maxSubArry > choose2)
+            maxSubArry = maxSubArry;
+        else
+            maxSubArry = choose2;
+    }
+
+    return maxSubArry;
+
 }
