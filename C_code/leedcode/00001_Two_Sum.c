@@ -5,67 +5,63 @@
 #include<stdbool.h>
 #include<string.h>
 
-/*1. Two Sum
-Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+/*901. Online Stock Span
+Design an algorithm that collects daily price quotes for some stock and returns the span of that stock's price for the current day.
 
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
+The span of the stock's price today is defined as the maximum number of consecutive days (starting from today and going backward) for which the stock price was less than or equal to today's price.
 
-You can return the answer in any order.
+For example, if the price of a stock over the next 7 days were [100,80,60,70,60,75,85], then the stock spans would be [1,1,1,2,1,4,6].
+Implement the StockSpanner class:
 
+StockSpanner() Initializes the object of the class.
+int next(int price) Returns the span of the stock's price given that today's price is price.
  
 
 Example 1:
 
-Input: nums = [2,7,11,15], target = 9
-Output: [0,1]
-Output: Because nums[0] + nums[1] == 9, we return [0, 1].
-Example 2:
+Input
+["StockSpanner", "next", "next", "next", "next", "next", "next", "next"]
+[[], [100], [80], [60], [70], [60], [75], [85]]
+Output
+[null, 1, 1, 1, 2, 1, 4, 6]
 
-Input: nums = [3,2,4], target = 6
-Output: [1,2]
-Example 3:
-
-Input: nums = [3,3], target = 6
-Output: [0,1]
+Explanation
+StockSpanner stockSpanner = new StockSpanner();
+stockSpanner.next(100); // return 1
+stockSpanner.next(80);  // return 1
+stockSpanner.next(60);  // return 1
+stockSpanner.next(70);  // return 2
+stockSpanner.next(60);  // return 1
+stockSpanner.next(75);  // return 4, because the last 4 prices (including today's price of 75) were less than or equal to today's price.
+stockSpanner.next(85);  // return 6
  
 
 Constraints:
 
-2 <= nums.length <= 105
--109 <= nums[i] <= 109
--109 <= target <= 109
-Only one valid answer exists.
+1 <= price <= 105
+At most 104 calls will be made to next.
 */
-
-int* twoSum(int* nums, int numsSize, int target, int* returnSize);
-
-void main()
-{
+typedef struct {
+    
+} StockSpanner;
 
 
-    return; 
+StockSpanner* stockSpannerCreate() {
+    
 }
 
-
-int* twoSum(int* nums, int numsSize, int target, int* returnSize)
-{
-    int i, j;
-    int *output;
-    output = (int*)malloc(sizeof(int)*2);
-
-    for(i=0;i<numsSize-1;i++)
-    {
-        for(j=i+1;j<numsSize;j++)
-        {
-            if((nums[i]+nums[j]) == target)
-            {
-                output[0] = i;
-                output[1] = j;
-                *returnSize = 2;
-                return output;
-            }
-        }
-    }
-    *returnSize = 0;
-    return output;
+int stockSpannerNext(StockSpanner* obj, int price) {
+  
 }
+
+void stockSpannerFree(StockSpanner* obj) {
+    free(obj);
+}
+
+/**
+ * Your StockSpanner struct will be instantiated and called as such:
+ * StockSpanner* obj = stockSpannerCreate();
+ * int param_1 = stockSpannerNext(obj, price);
+ 
+ * stockSpannerFree(obj);
+*/
