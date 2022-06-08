@@ -5,6 +5,7 @@
 #include<stdbool.h>
 #include<string.h>
 
+//https://hackmd.io/@sysprog/c-linked-list
 /*00021. Merge Two Sorted Lists
 You are given the heads of two sorted linked lists list1 and list2.
 
