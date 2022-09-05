@@ -44,8 +44,20 @@ endj < startj+1
  * The sizes of the arrays are returned as *returnColumnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
-int** intervalIntersection(int** firstList, int firstListSize, int* firstListColSize, int** secondList, int secondListSize, int* secondListColSize, int* returnSize, int** returnColumnSizes){
+int** intervalIntersection(int** firstList, int firstListSize, int* firstListColSize, 
+                           int** secondList, int secondListSize, int* secondListColSize, 
+                           int* returnSize, int** returnColumnSizes)
+{
+    //firstList = [[0,2],[5,10],[13,23],[24,25]], firstListSize=4, firstListColSize=[2,2,2,2]
+    //secondList = [[1,5],[8,12],[15,24],[25,26]], secondListSize=4, secondListColSize[2,2,2,2]
+    //ans = [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]], *returnSize = 6, *returnColumnSizes = ansColSize // [2,2,2,2,2,2]
+    int** ans = NULL;
+    int ansSize = 0;
 
+    *returnSize = ansSize;
+    int *ansColSize = malloc(ansSize*sizeof*(int));
+    *returnColumnSizes = ansColSize;
+    return ans;
 }
 
 
