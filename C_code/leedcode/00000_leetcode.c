@@ -5,63 +5,46 @@
 #include<stdbool.h>
 #include<string.h>
 
-/*901. Online Stock Span
-Design an algorithm that collects daily price quotes for some stock and returns the span of that stock's price for the current day.
+/*00451. Sort Characters By Frequency
+Medium
 
-The span of the stock's price today is defined as the maximum number of consecutive days (starting from today and going backward) for which the stock price was less than or equal to today's price.
+4744
 
-For example, if the price of a stock over the next 7 days were [100,80,60,70,60,75,85], then the stock spans would be [1,1,1,2,1,4,6].
-Implement the StockSpanner class:
+191
 
-StockSpanner() Initializes the object of the class.
-int next(int price) Returns the span of the stock's price given that today's price is price.
+Add to List
+
+Share
+Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is the number of times it appears in the string.
+
+Return the sorted string. If there are multiple answers, return any of them.
+
  
 
 Example 1:
 
-Input
-["StockSpanner", "next", "next", "next", "next", "next", "next", "next"]
-[[], [100], [80], [60], [70], [60], [75], [85]]
-Output
-[null, 1, 1, 1, 2, 1, 4, 6]
+Input: s = "tree"
+Output: "eert"
+Explanation: 'e' appears twice while 'r' and 't' both appear once.
+So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+Example 2:
 
-Explanation
-StockSpanner stockSpanner = new StockSpanner();
-stockSpanner.next(100); // return 1
-stockSpanner.next(80);  // return 1
-stockSpanner.next(60);  // return 1
-stockSpanner.next(70);  // return 2
-stockSpanner.next(60);  // return 1
-stockSpanner.next(75);  // return 4, because the last 4 prices (including today's price of 75) were less than or equal to today's price.
-stockSpanner.next(85);  // return 6
- 
+Input: s = "cccaaa"
+Output: "aaaccc"
+Explanation: Both 'c' and 'a' appear three times, so both "cccaaa" and "aaaccc" are valid answers.
+Note that "cacaca" is incorrect, as the same characters must be together.
+Example 3:
 
-Constraints:
-
-1 <= price <= 105
-At most 104 calls will be made to next.
+Input: s = "Aabb"
+Output: "bbAa"
+Explanation: "bbaA" is also a valid answer, but "Aabb" is incorrect.
+Note that 'A' and 'a' are treated as two different characters.
 */
-typedef struct {
-    
-} StockSpanner;
 
+char * frequencySort(char * s){
 
-StockSpanner* stockSpannerCreate() {
-    
-}
-
-int stockSpannerNext(StockSpanner* obj, int price) {
   
 }
 
-void stockSpannerFree(StockSpanner* obj) {
-    free(obj);
-}
 
-/**
- * Your StockSpanner struct will be instantiated and called as such:
- * StockSpanner* obj = stockSpannerCreate();
- * int param_1 = stockSpannerNext(obj, price);
- 
- * stockSpannerFree(obj);
-*/
+//https://www.youtube.com/watch?v=fYzTbc2rx44&list=PLY_qIufNHc292EYDwe3B6sGYO_vQ7pOLx&index=22
