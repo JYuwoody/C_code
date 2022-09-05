@@ -5,46 +5,48 @@
 #include<stdbool.h>
 #include<string.h>
 
-/*00451. Sort Characters By Frequency
+/*00986. Interval List Intersections
 Medium
 
-4744
+You are given two lists of closed intervals, firstList and secondList, where firstList[i] = [starti, endi] and secondList[j] = [startj, endj]. Each list of intervals is pairwise disjoint and in sorted order.
 
-191
+Return the intersection of these two interval lists.
 
-Add to List
+A closed interval [a, b] (with a <= b) denotes the set of real numbers x with a <= x <= b.
 
-Share
-Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is the number of times it appears in the string.
-
-Return the sorted string. If there are multiple answers, return any of them.
+The intersection of two closed intervals is a set of real numbers that are either empty or represented as a closed interval. For example, the intersection of [1, 3] and [2, 4] is [2, 3].
 
  
 
 Example 1:
 
-Input: s = "tree"
-Output: "eert"
-Explanation: 'e' appears twice while 'r' and 't' both appear once.
-So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+
+Input: firstList = [[0,2],[5,10],[13,23],[24,25]], secondList = [[1,5],[8,12],[15,24],[25,26]]
+Output: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
 Example 2:
 
-Input: s = "cccaaa"
-Output: "aaaccc"
-Explanation: Both 'c' and 'a' appear three times, so both "cccaaa" and "aaaccc" are valid answers.
-Note that "cacaca" is incorrect, as the same characters must be together.
-Example 3:
+Input: firstList = [[1,3],[5,9]], secondList = []
+Output: []
+ 
 
-Input: s = "Aabb"
-Output: "bbAa"
-Explanation: "bbaA" is also a valid answer, but "Aabb" is incorrect.
-Note that 'A' and 'a' are treated as two different characters.
+Constraints:
+
+0 <= firstList.length, secondList.length <= 1000
+firstList.length + secondList.length >= 1
+0 <= starti < endi <= 109
+endi < starti+1
+0 <= startj < endj <= 109
+endj < startj+1
 */
 
-char * frequencySort(char * s){
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+int** intervalIntersection(int** firstList, int firstListSize, int* firstListColSize, int** secondList, int secondListSize, int* secondListColSize, int* returnSize, int** returnColumnSizes){
 
-  
 }
 
 
-//https://www.youtube.com/watch?v=fYzTbc2rx44&list=PLY_qIufNHc292EYDwe3B6sGYO_vQ7pOLx&index=22
+//https://www.youtube.com/watch?v=fT49oFlbgW4&list=PLY_qIufNHc292EYDwe3B6sGYO_vQ7pOLx&index=23
