@@ -46,11 +46,30 @@ struct ListNode* newNode(int val) {
 
 struct ListNode* deleteDuplicates(struct ListNode* head) {
     if (head == NULL) return NULL;
-    
-    struct ListNode dummy;
-    dummy.next = head;
-    struct ListNode* prev = &dummy;
-    struct ListNode* curr = head;    
+    struct ListNode* tempresult = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* curr = head;
+    struct ListNode* result = tempresult;
 
-    
+    while(curr != NULL)
+    {
+        if(curr->next != NULL && curr->val != curr->next->val)
+        {
+            // printf("%d %p\n", curr->val, tempresult);
+            tempresult->next = newNode(curr->val);
+            tempresult = tempresult->next;
+            if(curr->next->next == NULL)
+            {
+                curr = curr->next;
+                tempresult->next = newNode(curr->val);
+                break;
+            }
+        }
+
+        curr = curr->next;
+        
+    }
+
+    result = result->next;
+
+    return result;
 }
