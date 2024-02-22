@@ -73,3 +73,68 @@ struct ListNode* deleteDuplicates(struct ListNode* head) {
 
     return result;
 }
+
+
+//>>>
+typedef struct Node{
+    int num;
+    struct Node *next;
+}Node;
+
+void insert(Node **list,int num)
+{
+    Node *head =(Node*)malloc(sizeof(Node));
+    if (head == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    head->num=num;
+    head->next=NULL;
+    
+    if(*list==NULL)
+    {
+        *list=head;
+    }
+    else
+    {
+        Node *temp=*list;
+        while(temp != NULL &&temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=head;
+    }
+}
+
+Node* deleteDuplicates(Node *list)
+{
+    if (list == NULL) {
+        return NULL; // Return NULL if the list is empty
+    }
+    Node *temp=list;
+    int problematic =-200;
+    Node *newNode=NULL;
+    while(temp!=NULL)
+    {
+        if (temp->next == NULL)
+        {
+            if (temp->num != problematic)
+            {
+                insert(&newNode, temp->num); // Insert the last non-duplicate node
+            }
+            break; // Exit the loop since we've reached the end of the list
+        }
+        else if( temp->num!=temp->next->num && temp->num!=problematic)
+        {
+            insert(&newNode,temp->num);
+        }
+        else
+        {
+            problematic=temp->num;
+        }
+        temp=temp->next;
+    }
+    return newNode;
+}
+//<<<
