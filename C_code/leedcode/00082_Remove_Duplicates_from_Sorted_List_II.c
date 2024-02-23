@@ -68,7 +68,6 @@ struct ListNode* deleteDuplicates(struct ListNode* head) {
     struct ListNode* result = NULL;    
     struct ListNode* curr = head;
     int tempvaule =-200;
-    int flag = 0;
 
     while(curr != NULL)
     {
@@ -93,3 +92,42 @@ struct ListNode* deleteDuplicates(struct ListNode* head) {
     return result;
 }
 // case 1 <<<
+
+// case 2 >>>
+// Runtime: 3 ms, Beats: 77.65%
+// Memory: 6.61 MB, Beats: 49.31%
+void insert(struct ListNode** list, int val) {
+    struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
+    node->val = val;
+    node->next = NULL;
+
+    if (*list == NULL) {
+        *list = node;
+    } else {
+        struct ListNode* temp = *list;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = node;
+    }
+}
+
+struct ListNode* deleteDuplicates(struct ListNode* head) {
+    if (head == NULL) return NULL;
+
+    struct ListNode* result = NULL;
+    struct ListNode* curr = head;
+    struct ListNode* prev = NULL;
+
+    while (curr != NULL) {
+        int val = curr->val;
+        if ((curr->next == NULL || curr->next->val != val) && (prev == NULL || prev->val != val)) {
+            insert(&result, val);
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+
+    return result;
+}
+// case 2 <<<
