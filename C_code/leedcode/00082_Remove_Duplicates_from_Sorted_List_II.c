@@ -38,7 +38,7 @@ struct ListNode {
 
 
 // case 1 >>>
-// Runtime: 6 ms, Beats: 47.23%
+// Runtime: 4 ms, Beats: 56.91%
 // Memory: 6.52 MB, Beats: 50.69%
 
 // Function to create a new node
@@ -67,7 +67,7 @@ struct ListNode* deleteDuplicates(struct ListNode* head) {
     if (head == NULL) return NULL;
     struct ListNode* result = NULL;    
     struct ListNode* curr = head;
-    int tempvaule =-200;
+    int tempvaule = -200;
 
     while(curr != NULL)
     {
@@ -94,6 +94,43 @@ struct ListNode* deleteDuplicates(struct ListNode* head) {
 // case 1 <<<
 
 // case 2 >>>
+// Runtime: 6 ms, Beats: 47.23%
+// Memory: 6.65 MB, Beats: 49.31%
+void newNode(struct ListNode** list, int val) {
+    struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
+    node->val = val;
+    node->next = NULL;
+
+    if (*list == NULL) {
+        *list = node;
+    } else {
+        struct ListNode* temp = *list;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = node;
+    }
+}
+
+struct ListNode* deleteDuplicates(struct ListNode* head) {
+    if (head == NULL) return NULL;
+    struct ListNode* result = NULL;
+    struct ListNode* curr = head;
+    int prevValue = -200;
+
+    while (curr != NULL) {
+        if (curr->val != prevValue && (curr->next == NULL || curr->next->val != curr->val)) {
+            newNode(&result, curr->val);
+        }
+        prevValue = curr->val;
+        curr = curr->next;
+    }
+
+    return result;
+}
+// case 2 <<<
+
+// case 3 >>>
 // Runtime: 3 ms, Beats: 77.65%
 // Memory: 6.61 MB, Beats: 49.31%
 void insert(struct ListNode** list, int val) {
@@ -130,4 +167,4 @@ struct ListNode* deleteDuplicates(struct ListNode* head) {
 
     return result;
 }
-// case 2 <<<
+// case 3 <<<
