@@ -96,6 +96,12 @@ Solution* solutionCreate(int* w, int wSize) {
 }
 
 int solutionPickIndex(Solution* self) {
+    //     0  1  2
+    // w: [1, 2, 3]
+    //     0  1  2, 3, 4, 5, 6      <- d is rand of it
+    // l: [0, 1, 1, 1, 2, 2, 2]    
+    //     0  1  2      <- i
+    // a: [1, 4, 7]     <- c 
     int d = rand() % self->a[self->aSize-1];
     int l = 0, r = self->aSize;
     int mid = 0;
